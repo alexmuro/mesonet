@@ -36,6 +36,15 @@ Cascading Style Sheets -->
         	cursor:pointer;
 
         }
+        .asos:hover{
+        	stroke: rgb(255, 0, 0);
+        	stroke-width: 3pt;
+        	cursor:pointer;
+
+        }
+        #info												{background:#fff; border-top:5px solid #222; border-bottom:1px solid #222; color:#222; display:none; font-size:.875em; padding:10px 15px 5px 15px; position:absolute; width:300px; z-index:99;}
+		#info p												{font-size:1em; line-height:1.4; margin:0 0 10px 0;}
+		#info span											{font-size:.875em; text-transform:uppercase;}
     </style>
 </head>
 <body>
@@ -53,11 +62,14 @@ Cascading Style Sheets -->
 	<h1>MESONET Site Selection Tool</h1>
 	<div id="content">
 		<center>
+			<div style="width:250px;">
+			<span style="float:left;font-size:10px;font-weight:light">Station interval in millionths of degrees Lat/Long</span>
+			</div>
 			<input type="text" id="interval_text" style="border:none;font-size:18pt;width:250px" value="3500">
 			<div style="width:250px;">
 
-			<span style="float:left;font-size:10px;font-weight:light"> Fewer Stations </span>
-			<span style="float:right;font-size:10px;font-weight:light"> More Stations </span>
+			<span style="float:left;font-size:10px;font-weight:light"> More Stations </span>
+			<span style="float:right;font-size:10px;font-weight:light"> Fewer Stations </span>
 			</div>
 
 			<input type="range" id="interval_slider" value="3500" min="2645" max="9000" step="100" style="width:200px">
@@ -67,6 +79,7 @@ Cascading Style Sheets -->
 	</div>
 
 </div>
+<div id="info"></div>
 <script>
 $(function(){ 
 	mesonet.datasource = 'data/getGrid.php';
@@ -85,12 +98,6 @@ $(function(){
 		mesonet.updateMap();
 	})
 });
-
-function getInterval(numStations){
-
-
-}
-
 </script>
 </body>
 </html>

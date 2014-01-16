@@ -13,6 +13,9 @@ var mesonet = {
 	nys:{},
 	brewer:['YlGn','YlGnBu','GnBu','BuGn','PuBuGn','PuBu','BuPu','RdPu','PuRd','OrRd','YlOrRd','YlOrBr','Purples','Blues','Greens','Oranges','Reds','Greys','PuOr','BrBG','PRGn','PiYG','RdBu','RdGy','RdYlBu','Spectral','RdYlGn','Accent','Dark2','Paired','Pastel1','Pastel2','Set1','Set2','Set3'],
 	brewer_index:1,
+	asos:{},
+	asos_stations:{},
+	asos_g:{},
 	bounds:[],
 	init : function(container) {
 		if(typeof container != 'undefined'){ mesonet.container = container; }
@@ -20,6 +23,9 @@ var mesonet = {
 		loader.push(mesonet.loadNYS);
 		if(mesonet.datasource !== '' ){ loader.push(mesonet.loadData); }
 		loader.push(mesonet.drawMap);
+		loader.push(mesonet.loadASOS);
+		loader.push(mesonet.drawASOS);
+		toggles.init();
 		loader.run();
 	},
 	loadNYS :function(){
@@ -30,6 +36,19 @@ var mesonet = {
 		})
 		.done(function(data) {
 			mesonet.nys = data;
+		})
+		.fail(function(data) { console.log(data.responseText); });
+		loader.run();
+	},
+	loadASOS :function(){
+		$.ajax({url:'data/getASOS.php',
+				type : 'POST',
+				dataType:'json',
+				async:false
+		})
+		.done(function(data) {
+			mesonet.asos = data;
+
 		})
 		.fail(function(data) { console.log(data.responseText); });
 		loader.run();
@@ -47,6 +66,35 @@ var mesonet = {
 			$('#num_stations').html(data.count);
 		})
 		.fail(function(data) { console.log(data.responseText); });
+		loader.run();
+	},
+	drawASOS : function(){
+		mesonet.asos_g = mesonet.svg.append("g").attr("class", "leaflet-zoom-hide asos_stations");
+		console.log(mesonet.asos);
+		mesonet.asos_stations = mesonet.asos_g.selectAll("circle.asos")
+			.data(mesonet.asos)
+				.enter()
+				.append("circle")
+				.classed("asos", true)
+				.attr({
+					r: 4,
+					cx: function(d,i) {
+						console.log(d);
+						return mesonet.project([d.longitude*1,d.latitude*1])[0];
+					},
+					cy: function(d,i) {
+						return mesonet.project([d.longitude*1,d.latitude*1])[1];
+					},
+					"fill": "#f1c40f",
+					"station_name": function(d,i) {
+						return d.station_name;
+					},
+
+				});
+				
+		//console.log(mesonet.asos_stations);
+		mesonet.map.on("viewreset", mesonet.reset);
+		mesonet.reset();
 		loader.run();
 	},
 	drawMap : function() {
@@ -71,7 +119,6 @@ var mesonet = {
 		mesonet.g = mesonet.svg.append("g").attr("class", "leaflet-zoom-hide stations");
 
 		mesonet.bounds = d3.geo.bounds(mesonet.nys);
-		console.log(mesonet.bounds);
 		mesonet.path = d3.geo.path().projection(mesonet.project);
 		
 		mesonet.feature=mesonet.g.selectAll("path")
@@ -80,8 +127,7 @@ var mesonet = {
 			.attr("class", function(d) { return 'station';})
 			.attr("d", mesonet.path);
 			
-		mesonet.map.on("viewreset", mesonet.reset);
-		mesonet.reset();
+		
 		
 		// Reposition the SVG to cover the features.
 		
@@ -98,8 +144,17 @@ var mesonet = {
 			.style("margin-left", bottomLeft[0] + "px")
 			.style("margin-top", topRight[1] + "px");
 		mesonet.g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
+		mesonet.asos_g.attr("transform", "translate(" + -bottomLeft[0] + "," + -topRight[1] + ")");
+
 
 		mesonet.feature.attr("d", mesonet.path);
+		mesonet.asos_stations
+			.attr("cx", function(d) {
+				return mesonet.project([d.longitude*1,d.latitude*1])[0];
+			})
+			.attr("cy", function(d) {
+				return mesonet.project([d.longitude*1,d.latitude*1])[1];
+			});
 
 	},
 	project : function(x) {
@@ -127,20 +182,28 @@ var mesonet = {
 
 		//mesonet.reset();
 
-	},
+	}
 };
 //--------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------
 var toggles = {
-	init : function() {
+
+    init : function() {
+
 		$("#legend h2 a").on("click", function() {
 			$(this).toggleClass("closed");
 			$("#legend-detail").slideToggle(300);
 			return false;
 		});
+		$("#info-tab h2 a").on("click", function() {
+			$(this).toggleClass("closed");
+			$("#info-detail").slideToggle(300);
+			return false;
+		});
 	}
 };
+
 
 //--------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------
