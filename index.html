@@ -53,11 +53,13 @@ Cascading Style Sheets -->
 	<h1>MESONET Site Selection Tool</h1>
 	<div id="content">
 		<center>
-			
+			<input type="text" id="interval_text" style="border:none;font-size:18pt;width:250px" value="3500">
 			<div style="width:250px;">
+
 			<span style="float:left;font-size:10px;font-weight:light"> Fewer Stations </span>
 			<span style="float:right;font-size:10px;font-weight:light"> More Stations </span>
 			</div>
+
 			<input type="range" id="interval_slider" value="3500" min="2645" max="9000" step="100" style="width:200px">
 			<br>
 			Number of Stations : <span id="num_stations"></span>
