@@ -19,14 +19,15 @@ var mesonet = {
 	bounds:[],
 	init : function(container) {
 		if(typeof container != 'undefined'){ mesonet.container = container; }
-		toggles.init();
 		loader.push(mesonet.loadNYS);
 		if(mesonet.datasource !== '' ){ loader.push(mesonet.loadData); }
 		loader.push(mesonet.drawMap);
 		loader.push(mesonet.loadASOS);
 		loader.push(mesonet.drawASOS);
-		toggles.init();
 		loader.run();
+		toggles.init();
+		popup.init();
+		
 	},
 	loadNYS :function(){
 		$.ajax({url:'data/getNYS.php',
@@ -90,6 +91,15 @@ var mesonet = {
 						return d.station_name;
 					},
 
+				})
+				.on("mouseover", function(self) {
+					self = $(this);
+					var text = "<p><strong>ASOS Station<br></strong>" + self.attr("station_name") + "</p>";
+					$("#info").show().html(text);
+				})
+				.on("mouseout", function(self) {
+					self = $(this);
+					$("#info").hide().html("");
 				});
 				
 		//console.log(mesonet.asos_stations);
@@ -204,6 +214,32 @@ var toggles = {
 	}
 };
 
+var popup = {
+
+    init : function() {
+
+		// position popup
+		windowW = $(window).width();
+		$("#map").on("mousemove", function(e) {
+			
+			var x = e.pageX + 20;
+			var y = e.pageY;
+			var windowH = $(window).height();
+			if (y > (windowH - 100)) {
+				var y = e.pageY - 100;
+			} else {
+				var y = e.pageY - 20;
+			}
+
+			$("#info").css({
+				"left": x,
+				"top": y
+			});
+		});
+
+	}
+
+};
 
 //--------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------
@@ -217,6 +253,7 @@ var loader = {
 		if(this.queue.length) this.queue.shift().call();
 	}
 };
+
 //------------------------------------------------------------------------------------------------------------
 // Helper Functions
 //--------------------------------------------------------------------------------------------------------------

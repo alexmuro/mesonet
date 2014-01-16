@@ -16,4 +16,5 @@ statep010
 WHERE ST_Within(grid.the_geom, statep010.geom) and state_fips = '36';
 
 
-pg_dump -h lor.availabs.org -U postgres -W -t dtl_st us_census | psql  -h lor.availabs.org -U postgres -W -d us_census2
+pg_dump -h localhost -U postgres -W -t dtl_st us_census | psql  -h lor.availabs.org -U postgres -W -d us_census2
+ pg_dump -h localhost -U postgres -W -t asos_stations us_census | psql  -h lor.availabs.org -U postgres -W -d us_census2
