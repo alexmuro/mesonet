@@ -1,0 +1,17 @@
+ shp2pgsql -s 4326 statep010.shp | psql -h localhost -U postgres -W -d us_census
+ select ST_AsGeoJSON(geom) from statep010 where state_fips = '36'
+
+ SELECT ST_AsGeoJSON(grid.the_geom) FROM 
+(select st_setsrid(st_point(x, y), 4326) AS the_geom from 
+(select generate_series(130000, 142000, 500) AS x) AS a,
+(select generate_series(260000, 270000, 500) AS y) AS b) AS grid,
+statep010
+WHERE ST_Within(grid.the_geom, statep010.geom);
+
+SELECT grid.the_geom) FROM 
+(select st_setsrid(st_point(x, y), 4326) AS the_geom from 
+(select cast(generate_series(-797627, -71856, 1000) as float)/cast(10000 as float) AS x) AS a,
+(select cast(generate_series(404962, 450158,1000)as float/cast(10000 as float) AS y) AS b) AS grid,
+statep010
+WHERE ST_Within(grid.the_geom, statep010.geom) and state_fips = '36';
+

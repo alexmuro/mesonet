@@ -1,0 +1,246 @@
+/* reset */
+
+html, body, address, blockquote, del, div, h1, h2, h3, h4, h5, h6, hr, ins, noscript, p, pre, dl, dt, dd, li, ol, ul, table, caption, colgroup, col, thead, tfoot, tbody, tr, td, th, form, button, fieldset, legend, label, select, optgroup, option, textarea, a, bdo, br, img, map, area, object, param, q, script, span, sub, sup, abbr, acronym, cite, code, del, dfn, em, ins, kbd, samp, strong, var, b, big, i, small, tt{border:0;font-family:inherit;font-size:100%;font-style:inherit;font-weight:inherit;margin:0;outline:0;padding:0;vertical-align:baseline;}
+ol, ul{list-style:none;}
+th{text-align:left;}
+table{border-collapse:collapse;}
+
+
+
+/* global */
+
+body 												{background:#fafafa; font-size:1em; font-family:'Oxygen',sans-serif; line-height:1.5; overflow:hidden;}
+a:link,
+a:visited										    {color:#2C7BC9;text-decoration:none;
+													-webkit-transition:color .1s ease-in;  
+													-moz-transition:color .1s ease-in;  
+													-o-transition:color .1s ease-in;  
+													transition:color .1s ease-in;
+}
+a:hover,
+a:visited:hover									    {color:#19b5f7;text-decoration:none;}
+
+table td										    {}
+
+h1												    {font-size:2em; font-weight:700; margin:0 0 20px 0;}
+h2												    {font-size:1.25em; font-weight:700;}
+h3												    {}
+h4												    {}
+h5												    {}
+h6												    {}
+
+p												    {font-size:.875em; margin:0 0 15px 0;}
+span												{}
+hr													{border-top:1px solid #555; margin:20px 0;}
+label												{}
+input[type=text]									{}
+input[type=text]:focus								{}
+input[type=submit]									{}
+textarea											{}
+
+::selection 										{}
+::-moz-selection 									{}
+
+
+
+/* main */
+#index												{background:#333;}
+
+#main												{margin:60px auto; overflow:hidden; padding:10px; width:940px;}
+#main .c-01											{float:left; padding:100px 0 0 0; width:320px;}
+#main .c-01 li										{background:#ED3A2D; color:#fff; clear:both; display:inline-block; float:right; font-size:2em; font-weight:700; margin:0 0 10px 0;}
+#main .c-01 a										{color:#fff; display:block; padding:5px 18px 8px 18px;
+													-webkit-transition:background-color .2s ease-in;  
+													-moz-transition:background-color .2s ease-in;  
+													-o-transition:background-color .2s ease-in;  
+													transition:background-color .2s ease-in;
+}
+#main .c-01 a:hover									{background:#2e0101;}
+
+#main .c-02	.content								{background:#fff; border-bottom:1px solid #000; border-top:15px solid #000; float:left; padding:10px 20px; width:580px;}
+#main .c-02 h1										{font-size:2.75em; margin:0 0 15px 0;}
+#main .c-02 h2										{margin:0 0 10px 0;}
+#main .byline										{clear:both; font-size:.75em; font-weight:700; padding:10px 0 0 0; text-align:right; text-transform:uppercase;}
+#main .byline a										{color:#333;}
+#main .byline a:hover								{color:#000;}
+
+
+
+/* loading */
+#loading											{background:url(/t2/resources/images/loading.gif) center top transparent no-repeat; font-size:.875em; font-weight:700; left:30%; letter-spacing:1px; padding:35px 0 0 0; position:fixed; text-align:center; text-transform:uppercase; top:20px; width:20%;}
+
+
+
+/* legend */
+#legend												{background:#fff; color:#666; float:right; position:fixed; right:20%; width:200px; top:0;}
+#legend h2											{font-size:1em; margin:0; text-align:center;}
+#legend h2 a										{background:url(/t2/resources/images/arrows.png) 15px 11px #ddd no-repeat; color:#222; display:block; padding:5px 0 8px 0;
+													-webkit-transition:background .2s ease-in;  
+													-moz-transition:background .2s ease-in;  
+													-o-transition:background .2s ease-in;  
+													transition:background .2s ease-in;
+}
+#legend h2 a:hover									{background-color:#eee; background-position:15px 9px; color:#222;}
+#legend h2 a.closed									{background:url(/t2/resources/images/arrows.png) 15px -57px #ddd no-repeat; color:#222;}
+#legend h2 a.closed:hover							{background-color:#eee; background-position:15px -55px;}
+#legend h3 											{font-size:.75em; font-weight:700; margin:0 0 5px 0; text-transform:uppercase;}
+#legend hr 											{border-top:1px dotted #ccc; margin:15px 0;}
+
+#legend-detail										{border-bottom:1px solid #999; display:none; line-height:1.25; padding:10px 15px; width:170px;}
+#legend-detail li									{font-size:.75em; margin:0 0 5px 0; overflow:hidden;}
+#legend-detail li svg			    				{display:block; float:left; margin:0 5px 0 0;}
+#legend-detail li span			    				{padding:2px 0 0 0;}
+#legend-detail li span.c-01			    			{width:85px;}
+#legend-detail li span.c-02			    			{text-align:right; width:85px;}
+
+
+
+
+/* container */
+
+#container											{background:#f0f0f0; color:#000; height:100%; overflow:auto; padding:0%; position:fixed; right:0; width:20%; z-index:2;}
+#content											{width:90%; padding:5%;}
+#container h1										{background:#000; color:#fff; display:block; line-height:1.1; padding:10px 18px 15px 18px; text-align:center;}
+#container h2										{margin:0 0 20px 0; text-align:center;}
+#container ul										{clear:both; display:block; line-height:1.25; margin:0 0 80px 0; overflow:hidden;}
+#container ul li									{display:block; float:left; font-size:.875em; height:50px; width:33%;}
+#container ul li a									{display:block; height:45px; padding:5px 0 0 0; text-align:center; width:100%;}
+#container ul li .active							{background:#2C7BC9; color:#fff;}
+#zone-select										{background-color:#000; color:#fff;    -webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;background: #000;color:#fff;border:none;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer;}
+#zone-select:hover	 								{background-color: rgb(44, 123, 201);}
+
+.inverse-select										{background-color:#000; color:#fff;    -webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;background: #000;color:#fff;border:none;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer;}
+.inverse-select:hover									{background-color: rgb(44, 123, 201);}
+
+
+#container #economic								{margin:0;}
+#container #economic li								{display:block; float:left; height:50px; width:100%;}
+#container #economic li a						   	{color:#64961B; display:block; height:40px; padding:5px 0; 
+													-webkit-transition:color .1s ease-in;  
+													-moz-transition:color .1s ease-in;  
+													-o-transition:color .1s ease-in;  
+													transition:color .1s ease-in;
+													width:100%;}
+#container #economic li a:hover						{color:#89ca27;}
+#container #economic .active						{background:#64961B; color:#fff !important;}
+
+
+
+/* zoom buttons */
+#zoom												{overflow:hidden; position:fixed; right:21%; top:50px; width:40px;}
+#zoom-in,
+#zoom-out 											{clear:both; display:block; height:30px;padding:5px;
+													-webkit-transition:all .1s ease-in;  
+													-moz-transition:all .1s ease-in;  
+													-o-transition:all .1s ease-in;  
+													transition:all .1s ease-in;
+													width:30px;
+}
+#zoom-in:active,
+#zoom-out:active 									{opacity:.8;}
+#zoom-in:hover 										{-webkit-transform: scale(1.2);}
+#zoom-out:hover 									{-webkit-transform: scale(0.8);}
+
+
+
+/* content */
+
+.bar												{background:red; display:inline-block; float:left; margin:0 2px 0 0; width:10px;}
+text												{color:black;display:block;font-size:12px;}
+.axis path,
+.axis line 											{fill:none; stroke:black; shape-rendering:crispEdges;}
+.axis text 											{font-size:11px;}
+
+.tract												{cursor:pointer; display:none; stroke:black; stroke-width:0;
+													transition: fill .1s linear;
+													-moz-transition: fill .1s linear;    /* FF3.7+ */
+													-o-transition: fill .1s linear;      /* Opera 10.5 */
+													-webkit-transition: fill .1s linear; /* Saf3.2+, Chrome */
+													fill-opacity:.7;
+}
+.tract-active										{fill:#000 !important;}
+
+.route												{display:block; opacity:.3; stroke:#2C7BC9; stroke-width:3px;}
+.city-limit											{fill:none; stroke:#aaa; stroke-width:1.5px; stroke-dasharray:1,5;}
+.stop												{cursor:pointer; display:block; /* fill:#ED3A2D;  */opacity:.3; stroke:yellow; stroke-width:0;}
+
+#map												{left:0; height:100%; position:fixed; top:0; width:100%;}
+#info												{background:#fff; border-top:5px solid #222; border-bottom:1px solid #222; color:#222; display:none; font-size:.875em; padding:10px 15px 5px 15px; position:absolute; width:300px; z-index:99;}
+#info p												{font-size:1em; line-height:1.4; margin:0 0 10px 0;}
+#info span											{font-size:.875em; text-transform:uppercase;}
+#info span.poverty									{font-size:1em;color:#7CAD34; font-weight:bold; text-transform:none;}
+#info .race											{font-size:.875em; margin:0 0 10px 0;}
+#info .race span									{font-size:1em; color:#D18706; font-weight:bold; text-transform:none;}
+
+#coords	 											{position: absolute;bottom: 10px;left: 10px;}
+
+/* responsive design css rules */
+
+@media screen and (max-width:480px) {
+body 												{}
+													}
+
+@media screen and (min-width:480px) and (max-width:800px) {
+body 												{}
+													}
+
+@media screen and (min-width:800px) and (max-width:1024px) {
+body 												{}
+													}
+
+
+
+/* misc */
+
+small												{font-size:.75em; line-height:1.5;}
+strong											    {font-weight:bold;}
+em													{font-style:italic;}
+.cb													{clear:both;}          
+
+
+/* Mapping */
+#data{
+	padding-left:25px;
+}
+#county_data{
+ padding-left:25px;
+}
+
+#hover	{background:#fcfcfc; color:#666; float:right; position:fixed; right:20%; width:200px; bottom:0;}
+
+
+#graph{
+  width:860px;
+  height:500px;
+  
+}
+
+.counties {
+  fill: none;
+  stroke:#000;
+  stroke-width:.5px;
+}
+
+
+.states {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+}
+
+
+.county {
+  stroke:#000;
+}
+.county:hover{
+  stroke:#f00;
+  stroke-width:3px;
+}
+
+.none { fill:#fff;stroke:#ccc;stroke-linejoin: round; }
+.selected { fill:#f00;stroke:#000;stroke-linejoin: round; }
+
+
+select										{background-color:#000; color:#fff;    -webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;background: #000;color:#fff;border:none;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;cursor:pointer;}
+select:hover	 								{background-color: rgb(44, 123, 201);}
+
