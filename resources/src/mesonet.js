@@ -6,7 +6,7 @@ var mesonet = {
 	g:{},
 	datasource:'',
 	geodata: {},
-	interval:3500,
+	interval:3330,
 	ll:5,
 	path:{},
 	feature:{},
