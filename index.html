@@ -92,6 +92,7 @@ Cascading Style Sheets -->
 					<span style="float:right;font-size:10px;font-weight:light"> down </span>
 				</div>
 				<input type="range" id="long_adjust" value="0" min="-0.99" max="0.99" step=".01" style="width:200px">
+				<br>
 				Number of Stations : <span id="num_stations"></span>
 				<br>
 				
@@ -133,7 +134,7 @@ $(function(){
 		mesonet.latshift = $('#lat_adjust').val()*1;
 		mesonet.updateMap();
 	});
-	
+
 });
 </script>
 </body>
