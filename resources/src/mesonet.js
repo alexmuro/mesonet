@@ -7,6 +7,8 @@ var mesonet = {
 	datasource:'',
 	geodata: {},
 	interval:3330,
+	latshift:0,
+	longshift:0,
 	ll:5,
 	path:{},
 	feature:{},
@@ -57,7 +59,7 @@ var mesonet = {
 	loadData : function() {
 		$.ajax({url:mesonet.datasource,
 				type : 'POST',
-				data : {interval:mesonet.interval},
+				data : {interval:mesonet.interval,lat:mesonet.latshift,lon:mesonet.longshift},
 				dataType:'json',
 				async:false
 		})
@@ -71,7 +73,6 @@ var mesonet = {
 	},
 	drawASOS : function(){
 		mesonet.asos_g = mesonet.svg.append("g").attr("class", "leaflet-zoom-hide asos_stations");
-		console.log(mesonet.asos);
 		mesonet.asos_stations = mesonet.asos_g.selectAll("circle.asos")
 			.data(mesonet.asos)
 				.enter()
@@ -80,7 +81,6 @@ var mesonet = {
 				.attr({
 					r: 4,
 					cx: function(d,i) {
-						console.log(d);
 						return mesonet.project([d.longitude*1,d.latitude*1])[0];
 					},
 					cy: function(d,i) {
