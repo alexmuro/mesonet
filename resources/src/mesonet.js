@@ -206,11 +206,15 @@ var mesonet = {
 		var terrain = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/am3081.h0pna3ah/{z}/{x}/{y}.png");
 		var streets = new L.TileLayer("http://{s}.tiles.mapbox.com/v3/am3081.h0po4e8k/{z}/{x}/{y}.png");
 		mesonet.rainfall = new L.tileLayer('data/tiles/{z}/{x}/{y}.png', {minZoom: 5, maxZoom: 10,tms: true,opacity:0.5});
+		mesonet.floodplanes = new L.tileLayer('data/flood_planes/{z}/{x}/{y}.png', {minZoom: 5, maxZoom: 12,tms: true,opacity:1});
 		var baseMaps = {
 			"Streets": streets,
 			"Satellite": satellite,
 			"Terrain": terrain
 		};
+		var overlayMaps ={
+			"Floodplane":mesonet.floodplanes
+		}
 		
 		mesonet.map = new L.Map(mesonet.container, {
 			center: [42.76314586689494,-74.7509765625],
@@ -218,7 +222,7 @@ var mesonet = {
 			attributionControl:false,
 			layers: [streets, satellite,terrain]
 		});
-		L.control.layers(baseMaps,{},{position:'topleft'}).addTo(mesonet.map);
+		L.control.layers(baseMaps,overlayMaps,{position:'topleft'}).addTo(mesonet.map);
 		mesonet.map.addLayer(mesonet.rainfall);
 			
 		mesonet.svg = d3.select(mesonet.map.getPanes().overlayPane).append("svg");
