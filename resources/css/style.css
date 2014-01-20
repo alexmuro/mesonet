@@ -74,7 +74,7 @@ textarea											{}
 /* legend */
 #legend												{background:#fff; color:#666; float:right; position:fixed; right:20%; width:200px; top:0;}
 #legend h2											{font-size:1em; margin:0; text-align:center;}
-#legend h2 a										{background:url(/t2/resources/images/arrows.png) 15px 11px #ddd no-repeat; color:#222; display:block; padding:5px 0 8px 0;
+#legend h2 a										{background:url(resources/images/arrows.png) 15px 11px #ddd no-repeat; color:#222; display:block; padding:5px 0 8px 0;
 													-webkit-transition:background .2s ease-in;  
 													-moz-transition:background .2s ease-in;  
 													-o-transition:background .2s ease-in;  
