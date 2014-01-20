@@ -30,6 +30,9 @@ Cascading Style Sheets -->
             stroke-linecap: round;
             stroke-linejoin: round;
         }
+        .county{
+        	fill-opacity:.5;
+        }
         .station:hover{
         	stroke: rgb(255, 0, 0);
         	stroke-width: 3pt;
@@ -67,38 +70,45 @@ Cascading Style Sheets -->
 		<strong>Station Site Selection</strong>
 		<div class="whitebox">
 			<center>
-				<div style="width:250px;">
+				<div style="width:90%;">
 				<span style="float:left;font-size:10px;font-weight:light">Station interval in millionths of degrees Lat/Long</span>
 				</div>
-				<input type="text" id="interval_text" style="border:none;background-color:#f0f0f0;padding-left:5px;margin-bottom:5px;font-size:18pt;width:250px" value="3330">
-				<div style="width:250px;">
+				<input type="text" id="interval_text" style="border:none;background-color:#f0f0f0;padding-left:5px;margin-bottom:5px;font-size:18pt;width:90%" value="3330">
+				<div style="width:90%;">
 
 				<span style="float:left;font-size:10px;font-weight:light"> More Stations </span>
 				<span style="float:right;font-size:10px;font-weight:light"> Fewer Stations </span>
 				</div>
 
-				<input type="range" id="interval_slider" value="3330" min="2645" max="9000" step="10" style="width:200px">
+				<input type="range" id="interval_slider" value="3330" min="2645" max="9000" step="10" style="width:80% 	">
 				<br>
 				<p style="font-size:10px;font-weight:light">Shift Grid Vertically : <strong><span id="lat-shift">0.0</span>%</strong></p>
-				<div style="width:230px;margin-top:-27px">
+				<div style="width:90%;margin-top:-27px">
 					<span style="float:left;font-size:10px;font-weight:light"> down </span>
 					<span style="float:right;font-size:10px;font-weight:light"> up </span>
 				</div>
-				<input type="range" id="lat_adjust" value="0" min="-0.99" max="0.99" step=".01" style="width:200px">
+				<input type="range" id="lat_adjust" value="0" min="-0.99" max="0.99" step=".01" style="width:80% 	">
 
 				<p style="font-size:10px;font-weight:light">Shift Grid Laterally : <strong><span id="long-shift">0.0</span>%</strong></p>
-				<div style="width:230px;margin-top:-27px">
+				<div style="width:90%;margin-top:-27px">
 					<span style="float:left;font-size:10px;font-weight:light"> left </span>
 					<span style="float:right;font-size:10px;font-weight:light"> right </span>
 				</div>
-				<input type="range" id="long_adjust" value="0" min="-0.99" max="0.99" step=".01" style="width:200px">
+				<input type="range" id="long_adjust" value="0" min="-0.99" max="0.99" step=".01" style="width:80% 	">
 				<br>
 				Number of Stations : <span id="num_stations"></span>
 				<br>
-				
-				
-
 			</center>
+		</div>
+		<strong>Map Layers</strong>
+		<div class="whitebox">
+			<ul style="list-style:none" id="economic">
+				<li><a id="station" class="active">Proposed Mesonet Stations</a></li>
+				<li><a id="asos_stations" class="active">ASOS Stations</a></li>
+				<li><a id="county" class="active">County Population</a></li>
+				<li><a id="rainfall_layer" class="">Average Annual Rainfall</a></li>
+			</ul>
+
 		</div>
 	</div>
 
@@ -108,6 +118,7 @@ Cascading Style Sheets -->
 $(function(){ 
 	mesonet.datasource = 'data/getGrid.php';
 	mesonet.init('map');
+	$('.leaflet-tile-pane .leaflet-layer').last().css('z-index',4).addClass('rainfall_layer').hide();//
 	//var map = {"200":2645,"199":2648,"198":,}
 
 	$('#interval_slider').on('change',function(){
@@ -133,6 +144,16 @@ $(function(){
 		$('#lat-shift').html(($('#lat_adjust').val()*100).toPrecision(2));
 		mesonet.latshift = $('#lat_adjust').val()*1;
 		mesonet.updateMap();
+	});
+
+	$('#economic li a').on('click',function(){
+		if($(this).hasClass('active')){
+			$(this).removeClass('active');
+			$('.'+$(this).attr('id')).hide(500);
+		}else{
+			$(this).addClass('active');
+			$('.'+$(this).attr('id')).show(500);
+		}
 	});
 
 });
