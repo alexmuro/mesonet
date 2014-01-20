@@ -48,7 +48,10 @@ Cascading Style Sheets -->
         .whitebox{
         	background-color:#fff;padding:5px;margin:5px;border-radius:5px;
         }
-        #info												{background:#fff; border-top:5px solid #222; border-bottom:1px solid #222; color:#222; display:none; font-size:.875em; padding:10px 15px 5px 15px; position:absolute; width:300px; z-index:99;}
+        .greybox{
+        	padding:5px;margin:5px;border-radius:5px;
+        }
+        #info												{background:#fff; border-top:5px solid #222; border-bottom:1px solid #222; color:#222; display:none; font-size:.875em; padding:10px 15px 5px 15px; position:absolute; width:150px; z-index:99;}
 		#info p												{font-size:1em; line-height:1.4; margin:0 0 10px 0;}
 		#info span											{font-size:.875em; text-transform:uppercase;}
     </style>
@@ -123,6 +126,11 @@ Cascading Style Sheets -->
 			</ul>
 
 		</div>
+		<strong>Export Mesonet Sites</strong>
+		<div class="greybox" style="height:30px">
+			<a id="export_csv" class="btn" style="margin-top:15px">Generate CSV</a>
+			<span id="download"></span>
+		</div>
 	</div>
 
 </div>
@@ -161,6 +169,29 @@ $(function(){
 		mesonet.updateMap();
 	});
 
+	$('#export_csv').on('click',function(){
+		var outputs = [];
+		mesonet.markers.forEach(function(d,i){
+			var marker = {};
+			marker.id = (i*1+1);
+			marker.lat = mesonet.markers[0]._latlng.lat;
+			marker.lon = mesonet.markers[0]._latlng.lng;
+			outputs.push(marker);
+		})
+
+		$.ajax({url:'data/export_csv.php',
+				type : 'POST',
+				data: {markers:outputs},
+				dataType:'json',
+				async:false
+		})
+		.done(function(data) {
+			$('#download').html("<a href='data/exports/mesonet_stations.csv'>[Download]</a>")
+		})
+		.fail(function(data) { console.log(data.responseText); });
+
+
+	})
 	$('#economic li a').on('click',function(){
 		if($(this).hasClass('active')){
 			$(this).removeClass('active');

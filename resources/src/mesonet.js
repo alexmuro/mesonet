@@ -83,8 +83,8 @@ var mesonet = {
 			mesonet.counties.min = 1000000;
 
 			mesonet.ny_counties.features.forEach(function(f){
-				f.properties["P0010001"] = (f.properties["P0010001"]*1)
-				f.properties["P0010001"] = (f.properties["P0010001"]*1)
+				f.properties["P0010001"] = (f.properties["P0010001"]*1);
+				f.properties["P0010001"] = (f.properties["P0010001"]*1);
 				if(f.properties['P0010001'] > mesonet.counties.max){
 					mesonet.counties.max = f.properties['P0010001'];
 				}
@@ -111,6 +111,7 @@ var mesonet = {
 				.attr("d", path)
 				.attr("class", "county")
 				.attr("c_name",function(d){ return d.properties.NAME+" "+d.properties.LSAD;})
+				.attr("pop",function(d){ return d.properties['P0010001'];})
 				.style("fill",function(d){
 					if(d.properties['P0010001'] === null){
 						return "#f00";
@@ -122,13 +123,13 @@ var mesonet = {
 				.style("stroke",'#333')
 				.on("mouseover", function(self) {
 					self = $(this);
-					var text = "<p><strong>"+ self.attr("c_name") +"</strong></p>";
+					var text = "<p><strong>"+ self.attr("c_name") +"</strong><br>Population: "+number_format(self.attr("pop"))+"</p>";
 					$("#info").show().html(text);
 				})
 				.on("mouseout", function(self) {
 					self = $(this);
 					$("#info").hide().html("");
-				});;
+				});
 				mesonet.setLegend();
 			loader.run();
 	},
@@ -229,13 +230,12 @@ var mesonet = {
 
 		
 		mesonet.bounds = d3.geo.bounds(mesonet.nys);
-		
-
 		mesonet.geodata.features.forEach(function(d,i){
 
-				var station = L.marker(d.geometry.coordinates.reverse(),{icon:mesonet.Icon,draggable:true});
+				var station = L.marker([d.geometry.coordinates[1],d.geometry.coordinates[0]],{icon:mesonet.Icon,draggable:true})
 				station.addTo(mesonet.map);
 				mesonet.markers.push(station);
+				mesonet.markers[i].bindPopup("<strong>Station "+(i*1+1)+"</strong><br>["+mesonet.markers[i]._latlng.lat+","+mesonet.markers[i]._latlng.lng+"]");
 		});
 		
 		
@@ -256,6 +256,7 @@ var mesonet = {
 
 
 		mesonet.counties.layer.attr("d", mesonet.path);
+		//mesonet.feature.attr("d", mesonet.path);
 		mesonet.asos_stations
 			.attr("cx", function(d) {
 				return mesonet.project([d.longitude*1,d.latitude*1])[0];
@@ -273,19 +274,31 @@ var mesonet = {
 		loader.push(mesonet.loadData);
 		loader.run();
 
+		mesonet.feature=mesonet.g.selectAll("path.station")
+			.data(mesonet.geodata.features);
+  
+		mesonet.feature
+			.enter()
+				.append('path');
+  
+		mesonet.feature
+			.attr("d", mesonet.path)
+			.attr("class", function(d) { return 'station';});
+		
 		//mesonet.bounds = d3.geo.bounds(mesonet.geodata);
-
+		mesonet.feature.exit().remove();
 
 		mesonet.geodata.features.forEach(function(d,i,s){
 			if(typeof mesonet.markers[i] !== 'undefined' ){
 				mesonet.markers[i].setLatLng(d.geometry.coordinates.reverse());
 				mesonet.markers[i].update();
+				mesonet.markers[i].getPopup().setContent("<strong>Station "+i+"</strong><br>["+mesonet.markers[i]._latlng.lat+","+mesonet.markers[i]._latlng.lng+"]");
 			}else{
 				var station = L.marker(d.geometry.coordinates.reverse(),{icon:mesonet.Icon,draggable:true});
 				station.addTo(mesonet.map);
 				mesonet.markers.push(station);
+				mesonet.markers[i].bindPopup("<strong>Station "+(i*1+1)+"</strong><br>["+mesonet.markers[i]._latlng.lat+","+mesonet.markers[i]._latlng.lng+"]");
 			}
-
 			
 		});
 		if(mesonet.markers.length > mesonet.geodata.features.length){
