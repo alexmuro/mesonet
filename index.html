@@ -174,8 +174,8 @@ $(function(){
 		mesonet.markers.forEach(function(d,i){
 			var marker = {};
 			marker.id = (i*1+1);
-			marker.lat = mesonet.markers[0]._latlng.lat;
-			marker.lon = mesonet.markers[0]._latlng.lng;
+			marker.lat = mesonet.markers[i]._latlng.lat;
+			marker.lon = mesonet.markers[i]._latlng.lng;
 			outputs.push(marker);
 		})
 
