@@ -13,8 +13,7 @@ var mesonet = {
 	path:{},
 	feature:{},
 	nys:{},
-	brewer:['YlGn','YlGnBu','GnBu','BuGn','PuBuGn','PuBu','BuPu','RdPu','PuRd','OrRd','YlOrRd','YlOrBr','Purples','Blues','Greens','Oranges','Reds','Greys','PuOr','BrBG','PRGn','PiYG','RdBu','RdGy','RdYlBu','Spectral','RdYlGn','Accent','Dark2','Paired','Pastel1','Pastel2','Set1','Set2','Set3'],
-	brewer_index:10,
+	brewer_index:26,
 	asos:{},
 	asos_stations:{},
 	asos_g:{},
@@ -99,9 +98,9 @@ var mesonet = {
 				.range(colorbrewer[mesonet.counties.brewer[mesonet.brewer_index]][mesonet.counties.ll]);
 
 
-			mesonet.counties.color = d3.scale.quantile()
-				.domain([mesonet.counties.min,mesonet.counties.max/5])
-				.range(colorbrewer[mesonet.counties.brewer[mesonet.brewer_index]][mesonet.counties.ll]);
+			mesonet.counties.color = d3.scale.threshold()
+				.domain(mesonet.counties.legend_domain.quantiles())
+				.range(colorbrewer[mesonet.counties.brewer[mesonet.brewer_index]][mesonet.counties.ll].reverse());
 
 			mesonet.counties.layer = mesonet.g.selectAll("path.county")
 				.data(mesonet.ny_counties.features)
@@ -118,7 +117,40 @@ var mesonet = {
 
 				})
 				.style("stroke",'#333');
+				mesonet.setLegend();
 			loader.run();
+	},
+	setLegend : function(){
+		var legendText = '<hr><h3>County Population</h3><ul id="tangle-legend">';
+		var prev = 0;
+		var numbers = ["zero","one","two","three","four","five","six","seven","eight","nine"];
+		mesonet.counties.color.domain().forEach(function(d,i){
+			
+			if(i === 0){
+				legendText += '<li><svg width="20" height="20"><rect width="300" height="100" fill="'+colorbrewer[mesonet.counties.brewer[mesonet.brewer_index]][mesonet.counties.ll][i]+'"></rect></svg><span>&lt;= '+number_format(mesonet.counties.color.domain()[i].toFixed(0))+' </span></li>';
+			}
+			else{
+				legendText += '<li><svg width="20" height="20"><rect width="300" height="100" fill="'+colorbrewer[mesonet.counties.brewer[mesonet.brewer_index]][mesonet.counties.ll][i]+'"></rect></svg><span> '+number_format(mesonet.counties.color.domain()[i-1].toFixed(0))+' - '+number_format(mesonet.counties.color.domain()[i].toFixed(0))+'</span></span></li>';
+			}
+		});
+		
+		legendText += '<li><svg width="20" height="20"><rect width="300" height="100" fill="'+colorbrewer[mesonet.counties.brewer[mesonet.brewer_index]][mesonet.counties.ll][mesonet.counties.color.domain().length]+'"></rect></svg><span>&gt; '+number_format(mesonet.counties.color.domain()[mesonet.counties.color.domain().length-1].toFixed(0))+'</span></li>';
+			
+		legendText +="</ul>";
+		$("#county_legend").html(legendText);
+		legendText = '<hr><h3>Anual Average Rainfall (in inches)</h3><ul id="tangle-legend">';
+		var rainfall_legend = [{'value':84962.7,'color':'rgba(26,150,65,255)'},{'value':99541.8,'color':'rgba(166,217,106,255)'},{'value':114121,'color':'rgba(255,255,192,255)'},{'value':128700,'color':'rgba(253,174,97,255)'},{'value':143279,'color':'rgba(215,25,28,255)'}];
+
+		rainfall_legend.forEach(function(d,i){
+			if(i === 0){
+				legendText += '<li><svg width="20" height="20"><rect width="300" height="100" fill="'+d.color+'"></rect></svg><span>&lt;= '+(rainfall_legend[i].value * 0.000393701).toFixed(2)+'\" </span></li>';
+			}
+			else{
+				legendText += '<li><svg width="20" height="20"><rect width="300" height="100" fill="'+d.color+'"></rect></svg><span> '+(rainfall_legend[i-1].value * 0.000393701).toFixed(2)+'\" - '+(rainfall_legend[i].value * 0.000393701).toFixed(2)+'\"</span></span></li>';
+			}
+		});
+		$("#rainfall_layer_legend").html(legendText);
+			//
 	},
 	drawASOS : function(){
 		mesonet.asos_g = mesonet.svg.append("g").attr("class", "leaflet-zoom-hide asos_stations");

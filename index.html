@@ -61,7 +61,20 @@ Cascading Style Sheets -->
 <div id="hover"></div>
 <div id="legend">
 <h2><a href="#" class="closed">Legend</a></h2>
-	<div id="legend-detail"></div>
+	<div id="legend-detail">
+		<div id="station_legend">
+			<ul>
+				<li><svg width="20" height="20"><circle cx="10" cy="10" r="7" fill="#fff" class='station'></circle></svg><span>Proposed Mesonet Site</span></li>
+			</ul>
+		</div>
+		<div id="asos_stations_legend">
+			<ul>
+				<li><svg width="20" height="20"><circle cx="10" cy="10" r="7" fill="#e74c3c" class='asos'></circle></svg><span>ASOS Station</span></li>
+			</ul>
+		</div>
+		<div id="county_legend"></div>
+		<div id="rainfall_layer_legend"></div>
+	</div>
 </div>
 <div id="container">
 	
@@ -118,6 +131,7 @@ Cascading Style Sheets -->
 $(function(){ 
 	mesonet.datasource = 'data/getGrid.php';
 	mesonet.init('map');
+	$('#rainfall_layer_legend').hide();
 	$('.leaflet-tile-pane .leaflet-layer').last().css('z-index',4).addClass('rainfall_layer').hide();//
 	//var map = {"200":2645,"199":2648,"198":,}
 
@@ -150,9 +164,11 @@ $(function(){
 		if($(this).hasClass('active')){
 			$(this).removeClass('active');
 			$('.'+$(this).attr('id')).hide(500);
+			$('#'+$(this).attr('id')+'_legend').hide(500);
 		}else{
 			$(this).addClass('active');
 			$('.'+$(this).attr('id')).show(500);
+			$('#'+$(this).attr('id')+'_legend').show(500);
 		}
 	});
 
