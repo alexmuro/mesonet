@@ -283,20 +283,6 @@ var mesonet = {
 		loader.push(mesonet.loadData);
 		loader.run();
 
-		mesonet.feature=mesonet.g.selectAll("path.station")
-			.data(mesonet.geodata.features);
-  
-		mesonet.feature
-			.enter()
-				.append('path');
-  
-		mesonet.feature
-			.attr("d", mesonet.path)
-			.attr("class", function(d) { return 'station';});
-		
-		//mesonet.bounds = d3.geo.bounds(mesonet.geodata);
-		mesonet.feature.exit().remove();
-
 		mesonet.geodata.features.forEach(function(d,i,s){
 			if(typeof mesonet.markers[i] !== 'undefined' ){
 				mesonet.markers[i].setLatLng(d.geometry.coordinates.reverse());
