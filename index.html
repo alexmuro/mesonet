@@ -123,6 +123,7 @@ Cascading Style Sheets -->
 				<li><a id="asos_stations" class="active">ASOS Stations</a></li>
 				<li><a id="county" class="">County Population</a></li>
 				<li><a id="rainfall_layer" class="">Average Annual Rainfall</a></li>
+				<li><a id="floodplain_layer" class="">2% Flood Plain</a></li>
 			</ul>
 
 		</div>
@@ -141,6 +142,8 @@ $(function(){
 	mesonet.init('map');
 	$('#rainfall_layer_legend').hide();
 	$('.leaflet-tile-pane .leaflet-layer').last().css('z-index',4).addClass('rainfall_layer').hide();//
+	mesonet.map.addLayer(mesonet.floodplanes);
+	$('.leaflet-tile-pane .leaflet-layer').last().css('z-index',4).addClass('floodplain_layer').hide();//
 	$('.county').hide();
 	$('#county_legend').hide();
 	

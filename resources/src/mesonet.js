@@ -213,7 +213,7 @@ var mesonet = {
 			"Terrain": terrain
 		};
 		var overlayMaps ={
-			"Floodplane":mesonet.floodplanes
+			"Floodplain":mesonet.floodplanes
 		}
 		
 		mesonet.map = new L.Map(mesonet.container, {
