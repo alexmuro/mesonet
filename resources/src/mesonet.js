@@ -222,7 +222,7 @@ var mesonet = {
 			attributionControl:false,
 			layers: [streets, satellite,terrain]
 		});
-		L.control.layers(baseMaps,overlayMaps,{position:'topleft'}).addTo(mesonet.map);
+		L.control.layers(baseMaps,{},{position:'topleft'}).addTo(mesonet.map);
 		mesonet.map.addLayer(mesonet.rainfall);
 			
 		mesonet.svg = d3.select(mesonet.map.getPanes().overlayPane).append("svg");
