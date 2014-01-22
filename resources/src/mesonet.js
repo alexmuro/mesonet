@@ -236,7 +236,7 @@ var mesonet = {
 		mesonet.bounds = d3.geo.bounds(mesonet.nys);
 		mesonet.geodata.forEach(function(d,i){
 
-				var station = L.marker([d.lat,d.lng],{icon:mesonet.Icon,draggable:false});
+				var station = L.marker([d.lat,d.lng],{icon:mesonet.Icon,draggable:true});
 				station.addTo(mesonet.map);
 				station.on('dragend', function(event){
 					var marker = event.target;
