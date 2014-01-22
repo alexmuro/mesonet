@@ -143,7 +143,7 @@ Cascading Style Sheets -->
 <div id="info"></div>
 <script>
 $(function(){ 
-	mesonet.datasource = 'data/getGrid.php';
+	mesonet.datasource = 'data/customData.php';
 	mesonet.init('map');
 	$('#rainfall_layer_legend').hide();
 	$('.leaflet-tile-pane .leaflet-layer').last().css('z-index',4).addClass('rainfall_layer').hide();//
